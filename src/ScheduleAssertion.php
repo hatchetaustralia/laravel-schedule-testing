@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Hatchet\LaravelScheduleTesting;
 
 use Carbon\Carbon;
+use ReflectionMethod;
 use Illuminate\Support\Arr;
 use PHPUnit\Framework\Assert;
 use Illuminate\Support\Collection;
@@ -74,12 +75,12 @@ final class ScheduleAssertion
         Assert::assertGreaterThan(
             0,
             $this->scheduledEvents
-                // ->map(fn (Event $event) => new ScheduleEvent(
-                //     $event->mutex,
-                //     $event->command,
-                //     $event->timezone,
-                // ))
-                ->filter(fn ($event) => $event->expressionPasses())
+                ->filter(function ($event) {
+                    $reflectionMethod = new ReflectionMethod(Event::class, 'expressionPasses');
+                    $reflectionMethod->setAccessible(true);
+
+                    return $reflectionMethod->invoke($event);
+                })
                 ->count(),
             "Command [{$this->signature}] is not scheduled to run at {$scheduledAt->toDateTimeString()}."
         );
@@ -91,11 +92,7 @@ final class ScheduleAssertion
 
     private function findScheduledEventsBySignature(): Collection
     {
-        $schedule = App::get(Schedule::class);
-
-        // dd($schedule->events());
-
-        return collect($schedule->events())
+        return collect((App::get(Schedule::class))->events())
             ->filter(fn (Event $event) => str_contains($event->command, $this->signature));
     }
 }
