@@ -10,7 +10,7 @@ final class AssertRunsInEnvironment extends TestCase
 {
     use InteractsWithSchedule;
 
-    public function test_runs_in_environment_with_string_parameter(): void
+    public function testRunsInEnvironmentWithStringParameter(): void
     {
         $this->fakeScheduledCommand()
             ->environments('production');
@@ -19,7 +19,7 @@ final class AssertRunsInEnvironment extends TestCase
             ->runsInEnvironment('production');
     }
 
-    public function test_runs_in_environment_with_array_parameter(): void
+    public function testRunsInEnvironmentWithArrayParameter(): void
     {
         $this->fakeScheduledCommand()
             ->environments('production');
@@ -28,7 +28,7 @@ final class AssertRunsInEnvironment extends TestCase
             ->runsInEnvironment(['production']);
     }
 
-    public function test_runs_in_environment_with_multiple_environments(): void
+    public function testRunsInEnvironmentWithMultipleEnvironments(): void
     {
         $this->fakeScheduledCommand()
             ->environments(['production', 'development']);
@@ -37,7 +37,7 @@ final class AssertRunsInEnvironment extends TestCase
             ->runsInEnvironment(['production', 'development']);
     }
 
-    public function test_runs_in_environment_fails_when_does_not_match_single_environment(): void
+    public function testRunsInEnvironmentFailsWhenDoesNotMatchSingleEnvironment(): void
     {
         $this->fakeScheduledCommand()
             ->environments('local');
@@ -52,7 +52,7 @@ final class AssertRunsInEnvironment extends TestCase
             ->runsInEnvironment('production');
     }
 
-    public function test_runs_in_environment_fails_when_a_single_given_environment_does_not_match(): void
+    public function testRunsInEnvironmentFailsWhenASingleGivenEnvironmentDoesNotMatch(): void
     {
         $this->fakeScheduledCommand()
             ->environments(['local', 'development']);

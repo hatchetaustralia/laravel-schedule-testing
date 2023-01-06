@@ -20,7 +20,7 @@ final class ScheduleAssertion
     public function __construct(
         public string $signature,
     ) {
-        $this->scheduledEvents = $this->findScheduledEventsBySignature($signature);
+        $this->scheduledEvents = $this->findScheduledEventsBySignature();
     }
 
     public function hasExpression(string $cronExpression): self

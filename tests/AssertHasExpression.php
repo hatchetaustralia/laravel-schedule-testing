@@ -17,13 +17,13 @@ final class AssertHasExpression extends TestCase
         $this->fakeScheduledCommand()->hourly();
     }
 
-    public function test_has_expression(): void
+    public function testHasExpression(): void
     {
         $this->assertSchedule('fake:command')
             ->hasExpression('0 * * * *');
     }
 
-    public function test_has_expression_failure(): void
+    public function testHasExpressionFailure(): void
     {
         $this->expectException(AssertionFailedError::class);
 

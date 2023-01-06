@@ -10,7 +10,7 @@ final class AssertIsScheduled extends TestCase
 {
     use InteractsWithSchedule;
 
-    public function test_is_scheduled(): void
+    public function testIsScheduled(): void
     {
         $this->fakeScheduledCommand();
 
@@ -18,7 +18,7 @@ final class AssertIsScheduled extends TestCase
             ->isScheduled();
     }
 
-    public function test_is_scheduled_failure(): void
+    public function testIsScheduledFailure(): void
     {
         $this->expectException(AssertionFailedError::class);
 

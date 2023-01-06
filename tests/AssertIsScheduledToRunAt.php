@@ -10,7 +10,7 @@ final class AssertIsScheduledToRunAt extends TestCase
 {
     use InteractsWithSchedule;
 
-    public function test_is_scheduled_to_run_at(): void
+    public function testIsScheduledToRunAt(): void
     {
         $this->fakeScheduledCommand()
             ->hourly();
@@ -19,7 +19,7 @@ final class AssertIsScheduledToRunAt extends TestCase
             ->isScheduledToRunAt(now()->startOfHour());
     }
 
-    public function test_is_scheduled_alias_for_is_scheduled_to_run_at(): void
+    public function testIsScheduledAliasForIsScheduledToRunAt(): void
     {
         $this->fakeScheduledCommand()
             ->hourly();
@@ -28,7 +28,7 @@ final class AssertIsScheduledToRunAt extends TestCase
             ->isScheduled(now()->startOfHour());
     }
 
-    public function test_is_scheduled_failure(): void
+    public function testIsScheduledToRunAtFailure(): void
     {
         $this->fakeScheduledCommand()
             ->hourly();
