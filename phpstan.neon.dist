@@ -1,10 +1,5 @@
 parameters:
-    level: max
+    level: 6
     paths:
         - src
         - tests
-    ignoreErrors:
-        - '#Call to an undefined method Tests\\IsMacroable::in\(\).#'
-    checkMissingIterableValueType: false
-    excludes_analyse:
-        - "src/ServiceProvider.php"

@@ -15,6 +15,7 @@ use Illuminate\Console\Scheduling\Schedule;
 
 final class ScheduleAssertion
 {
+    /** @var Collection<Int,Event> */
     private Collection $scheduledEvents;
 
     public function __construct(
@@ -36,6 +37,9 @@ final class ScheduleAssertion
         return $this;
     }
 
+    /**
+     * @param string|array<int,string> $environment
+     */
     public function runsInEnvironment(string|array $environment): self
     {
         $environments = collect(Arr::wrap($environment));
@@ -43,7 +47,9 @@ final class ScheduleAssertion
         Assert::assertGreaterThan(
             0,
             $this->scheduledEvents
-                ->filter(fn (Event $event) => $environments->every(fn (string $environment) => $event->runsInEnvironment($environment)))
+                ->filter(fn (Event $event) => $environments->every(
+                    fn (string $environment) => $event->runsInEnvironment($environment)
+                ))
                 ->count(),
             "Command [{$this->signature}] is not scheduled to run in {$environments->implode(' and ')}."
         );
@@ -90,9 +96,18 @@ final class ScheduleAssertion
         return $this;
     }
 
+    /**
+     * @return Collection<Int,Event>
+     */
     private function findScheduledEventsBySignature(): Collection
     {
-        return collect((App::get(Schedule::class))->events())
-            ->filter(fn (Event $event) => str_contains($event->command, $this->signature));
+        /** @var Collection<Int,Event> */
+        $events = (App::get(Schedule::class))->events();
+
+        return collect($events)
+            ->filter(
+                fn (Event $event) =>
+                    is_string($event->command) && str_contains($event->command, $this->signature)
+            );
     }
 }
