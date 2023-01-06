@@ -18,8 +18,7 @@
     ],
     "require": {
         "php": "^7.4|^8.0",
-        "nesbot/carbon": "^2.64",
-        "spatie/laravel-package-tools": "^1.13"
+        "nesbot/carbon": "^2.64"
     },
     "require-dev": {
         "illuminate/console": "^6.0|^7.0|^8.0|^9.0",
