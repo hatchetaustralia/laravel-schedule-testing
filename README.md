@@ -47,11 +47,24 @@ class HourlyReportCommandTest extends TestCase
 
 ## Available Assertions
 
+- [hasEmailOutputOnFailure](#hasEmailOutputOnFailure)
 - [hasExpression](#hasExpression)
 - [hasTimezone](#hasTimezone)
 - [isScheduled](#isScheduled)
 - [isScheduledToRunAt](#isScheduledToRunAt)
 - [runsInEnvironment](#runsInEnvironment)
+
+### hasEmailOutputOnFailure
+Asserts that the command has the given email recipients configured to receive an email with output on failure.
+
+```php
+$this->assertSchedule('command')->hasEmailOutputOnFailure('email@gmail.com');
+```
+
+Multiple recipients can be checked by using an array:
+```php
+$this->assertSchedule('command')->hasEmailOutputOnFailure(['email@gmail.com', 'email@outlook.com']);
+```
 
 ### hasExpression
 Asserts that the command has the given cron expression.

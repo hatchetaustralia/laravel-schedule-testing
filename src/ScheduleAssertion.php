@@ -7,12 +7,15 @@ namespace Hatchet\LaravelScheduleTesting;
 use DateTimeZone;
 use Carbon\Carbon;
 use ReflectionMethod;
+use ReflectionFunction;
 use Illuminate\Support\Arr;
 use PHPUnit\Framework\Assert;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Console\Scheduling\Event;
 use Illuminate\Console\Scheduling\Schedule;
+use Hatchet\LaravelScheduleTesting\Fakes\MailFake;
 
 final class ScheduleAssertion
 {
@@ -32,7 +35,7 @@ final class ScheduleAssertion
             $this->scheduledEvents
                 ->filter(fn (Event $event) => $event->expression === $cronExpression)
                 ->count(),
-            "Command [{$this->signature}] cron expression does not match {$cronExpression}."
+            $this->failureMessage("cron expression does not match {$cronExpression}.")
         );
 
         return $this;
@@ -52,8 +55,40 @@ final class ScheduleAssertion
                     fn (string $environment) => $event->runsInEnvironment($environment)
                 ))
                 ->count(),
-            "Command [{$this->signature}] is not scheduled to run in {$environments->implode(' and ')}."
+            $this->failureMessage("is not scheduled to run in {$environments->implode(' and ')}.")
         );
+
+        return $this;
+    }
+
+    /**
+     * @param string|array<int,string> $email
+     */
+    public function hasEmailOutputOnFailure(string|array $email): self
+    {
+        Mail::fake();
+        Mail::swap(new MailFake);
+
+        // Trigger failure callbacks
+        $this->scheduledEvents
+            ->each
+            ->finish(app(), exitCode: 1);
+
+        $emails = collect(Arr::wrap($email));
+
+        Mail::assertRawSent(function ($mail) use ($emails) {
+            $function = new ReflectionFunction($mail['callback']);
+
+            $variables = $function->getStaticVariables();
+
+            $hasEmails = isset($variables['addresses']) && is_array($variables['addresses'])
+                ? collect($variables['addresses'])->diff($emails)->isEmpty()
+                : false;
+
+            $fromScheduleEvent = $function->getClosureThis()::class === Event::class;
+
+            return $fromScheduleEvent && $hasEmails;
+        }, $this->failureMessage("does not have {$emails->implode(', ')} configured for a failure output email."));
 
         return $this;
     }
@@ -67,7 +102,7 @@ final class ScheduleAssertion
         Assert::assertGreaterThan(
             0,
             $this->scheduledEvents->count(),
-            "Command [{$this->signature}] is not scheduled."
+            $this->failureMessage('is not scheduled.')
         );
 
         return $this;
@@ -89,7 +124,7 @@ final class ScheduleAssertion
                     return $reflectionMethod->invoke($event);
                 })
                 ->count(),
-            "Command [{$this->signature}] is not scheduled to run at {$scheduledAt->toDateTimeString()}."
+            $this->failureMessage("is not scheduled to run at {$scheduledAt->toDateTimeString()}.")
         );
 
         Carbon::setTestNow($now);
@@ -108,7 +143,7 @@ final class ScheduleAssertion
             $this->scheduledEvents->some(
                 fn (Event $event): bool => $timezoneName($event->timezone) == $timezoneName($timezone)
             ),
-            "Command [{$this->signature}] does not have the timezone {$timezoneName($timezone)}."
+            $this->failureMessage("does not have the timezone {$timezoneName($timezone)}.")
         );
 
         return $this;
@@ -127,5 +162,12 @@ final class ScheduleAssertion
                 fn (Event $event) =>
                     is_string($event->command) && str_contains($event->command, $this->signature)
             );
+    }
+
+    private function failureMessage(string $message): string
+    {
+        $prefix = "Command [{$this->signature}]";
+
+        return "{$prefix} {$message}";
     }
 }

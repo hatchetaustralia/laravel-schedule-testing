@@ -3,3 +3,8 @@ parameters:
     paths:
         - src
         - tests
+    excludePaths:
+        - src/Fakes/MailFake.php
+    ignoreErrors:
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::finish\(\).#'
+        - '#Call to an undefined static method [a-zA-Z0-9\\_]+::assertRawSent\(\).#'
