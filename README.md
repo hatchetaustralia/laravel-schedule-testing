@@ -1,7 +1,9 @@
-<a href="https://hatchet.com.au" align="center">
-    <img
-        src="https://github.com/hatchetaustralia/laravel-schedule-testing/raw/main/docs/laravel-schedule-testing-logo.png" alt="Hatchet's Laravel Schedule Testing Package" width="439" height="250"
-    />
+<a href="https://hatchet.com.au">
+    <p align="center">
+        <img
+            src="https://github.com/hatchetaustralia/laravel-schedule-testing/raw/main/docs/laravel-schedule-testing-logo.png" alt="Hatchet's Laravel Schedule Testing Package" width="439" height="250"
+        />
+    </p>
 </a>
 
 <p align="center">
