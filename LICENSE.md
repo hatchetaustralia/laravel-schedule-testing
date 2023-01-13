@@ -1,6 +1,6 @@
 # Do No Harm License
 
-Copyright (c) Hatchet Pty Ltd <support@hachet.com.au>
+Copyright (c) Hatchet Pty Ltd <support@hatchet.com.au>
 
 **Preamble**
 
