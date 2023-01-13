@@ -105,7 +105,9 @@ final class ScheduleAssertion
                 : $timezone->getName();
 
         Assert::assertTrue(
-            $this->scheduledEvents->some(fn (Event $event): bool => $timezoneName($event->timezone) == $timezoneName($timezone)),
+            $this->scheduledEvents->some(
+                fn (Event $event): bool => $timezoneName($event->timezone) == $timezoneName($timezone)
+            ),
             "Command [{$this->signature}] does not have the timezone {$timezoneName($timezone)}."
         );
 
