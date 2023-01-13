@@ -54,12 +54,5 @@
             "@test:types",
             "@test:unit"
         ]
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Hatchet\\LaravelScheduleTesting\\LaravelScheduleTestingServiceProvider"
-            ]
-        }
     }
 }
