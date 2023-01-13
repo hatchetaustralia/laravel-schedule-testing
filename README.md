@@ -47,6 +47,31 @@ class HourlyReportCommandTest extends TestCase
 
 ## Available Assertions
 
+- [hasExpression](#hasExpression)
+- [hasTimezone](#hasTimezone)
+- [isScheduled](#isScheduled)
+- [isScheduledToRunAt](#isScheduledToRunAt)
+- [runsInEnvironment](#runsInEnvironment)
+
+### hasExpression
+Asserts that the command has the given cron expression.
+
+```php
+$this->assertSchedule('command')->hasExpression('0 * * * *');
+```
+
+### hasTimezone
+Asserts that the command has the given timezone.
+
+```php
+$this->assertSchedule('command')->hasTimezone('Australia/Perth');
+```
+
+Or you can pass a DateTimeZone:
+```php
+$this->assertSchedule('command')->hasTimezone(new DateTimeZone('Australia/Perth'));
+```
+
 ### isScheduled
 Asserts that the command has a defined schedule.
 
@@ -78,14 +103,6 @@ Multiple environments can be checked by using an array:
 ```php
 $this->assertSchedule('command')->runsInEnvironment(['production', 'staging']);
 ```
-
-### hasExpression
-Asserts that the command has the given cron expression
-
-```php
-$this->assertSchedule('command')->hasExpression('0 * * * *');
-```
-
 
 ## Contributing
 

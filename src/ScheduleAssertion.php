@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hatchet\LaravelScheduleTesting;
 
+use DateTimeZone;
 use Carbon\Carbon;
 use ReflectionMethod;
 use Illuminate\Support\Arr;
@@ -92,6 +93,21 @@ final class ScheduleAssertion
         );
 
         Carbon::setTestNow($now);
+
+        return $this;
+    }
+
+    public function hasTimezone(DateTimeZone|string $timezone): self
+    {
+        $timezoneName = fn (DateTimeZone|string $timezone) =>
+            is_string($timezone)
+                ? $timezone
+                : $timezone->getName();
+
+        Assert::assertTrue(
+            $this->scheduledEvents->some(fn (Event $event): bool => $timezoneName($event->timezone) == $timezoneName($timezone)),
+            "Command [{$this->signature}] does not have the timezone {$timezoneName($timezone)}."
+        );
 
         return $this;
     }
