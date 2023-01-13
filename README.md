@@ -17,8 +17,6 @@
 <a href="https://packagist.org/packages/hatchetaustralia/laravel-schedule-testing"><img src="https://img.shields.io/packagist/l/hatchetaustralia/laravel-schedule-testing" alt="License"></a>
 </p>
 
-<hr>
-
 ## About Laravel Schedule Testing
 Laravel Schedule Testing was created and maintained by the developers at [Hatchet](https://hatchet.com.au) and is a lightweight package for testing your scheduled commands in Laravel.
 
