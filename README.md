@@ -3,7 +3,7 @@
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/hatchetaustralia/laravel-schedule-testing/HEAD/.github/logo-dark.png">
       <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/hatchetaustralia/laravel-schedule-testing/HEAD/.github/logo-light.png">
-      <img alt="Hatchet's Laravel Schedule Testing" src="https://raw.githubusercontent.com/hatchetaustralia/laravel-schedule-testing/HEAD/.github/logo-light.svg" width="664" height="566" style="max-width: 100%;">
+      <img alt="Hatchet's Laravel Schedule Testing" src="https://raw.githubusercontent.com/hatchetaustralia/laravel-schedule-testing/HEAD/.github/logo-light.png" width="664" height="566" style="max-width: 100%;">
     </picture>
   </a>
 </p>
@@ -16,7 +16,7 @@
 </p>
 
 ## About Laravel Schedule Testing
-Laravel Schedule Testing was created and maintained by the developers at [Hatchet](https://hatchet.com.au) and is a lightweight package for testing your scheduled commands in Laravel.
+Laravel Schedule Testing was created and is maintained by the developers at [Hatchet](https://hatchet.com.au) and is a lightweight package for testing your scheduled commands in Laravel.
 
 ## Installation
 >Minimum requirement of PHP 8.0 and Laravel 9
