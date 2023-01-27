@@ -1,13 +1,11 @@
-<a href="https://hatchet.com.au">
-    <p align="center">
-        <img
-            src="https://github.com/hatchetaustralia/laravel-schedule-testing/raw/main/docs/laravel-schedule-testing-logo.png" alt="Hatchet's Laravel Schedule Testing Package" width="50%"
-        />
-    </p>
-</a>
-
 <p align="center">
-    <img src="https://github.com/hatchetaustralia/laravel-schedule-testing/raw/main/docs/example.png" alt="Laravel Schedule Testing Example" width="80%" />
+  <a href="https://hatchet.com.au" target="_blank">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/hatchetaustralia/laravel-schedule-testing/HEAD/.github/logo-dark.png">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/hatchetaustralia/laravel-schedule-testing/HEAD/.github/logo-light.png">
+      <img alt="Hatchet's Laravel Schedule Testing" src="https://raw.githubusercontent.com/hatchetaustralia/laravel-schedule-testing/HEAD/.github/logo-light.svg" width="664" height="566" style="max-width: 100%;">
+    </picture>
+  </a>
 </p>
 
 <p align="center">
