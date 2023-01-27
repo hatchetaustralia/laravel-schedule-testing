@@ -16,9 +16,12 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Console\Scheduling\Event;
 use Illuminate\Console\Scheduling\Schedule;
 use Hatchet\LaravelScheduleTesting\Fakes\MailFake;
+use Hatchet\LaravelScheduleTesting\Traits\MakesScheduleFrequencyAssertions;
 
 final class ScheduleAssertion
 {
+    use MakesScheduleFrequencyAssertions;
+
     /** @var Collection<Int,Event> */
     private Collection $scheduledEvents;
 
