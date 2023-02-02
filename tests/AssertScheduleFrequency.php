@@ -241,6 +241,54 @@ final class AssertScheduleFrequency extends TestCase
             ->runsYearlyOn(1, 5, '15:35');
     }
 
+    public function testAt(): void
+    {
+        $this->fakeScheduledCommand()->at('05:30');
+
+        $this->assertSchedule('fake:command')
+            ->runsAt('05:30');
+    }
+
+    public function testAtFailure(): void
+    {
+        $this->fakeScheduledCommand()->at('12:00');
+
+        $this->expectException(AssertionFailedError::class);
+        $this->expectExceptionMessageMatches('/Command \[fake:command\] does not run daily at 15:35/');
+
+        $this->assertSchedule('fake:command')
+            ->runsAt('15:35');
+    }
+
+    public function testDays(): void
+    {
+        $this->fakeScheduledCommand()->days([1, 2, 3]);
+
+        $this->assertSchedule('fake:command')
+            ->runsOnDays([1, 2, 3]);
+
+        $this->fakeScheduledCommand()->days(1);
+
+        $this->assertSchedule('fake:command')
+            ->runsOnDays(1);
+
+        $this->fakeScheduledCommand()->days(1, 5);
+
+        $this->assertSchedule('fake:command')
+            ->runsOnDays(1, 5);
+    }
+
+    public function testDaysFailure(): void
+    {
+        $this->fakeScheduledCommand()->days(4);
+
+        $this->expectException(AssertionFailedError::class);
+        $this->expectExceptionMessageMatches('/Command \[fake:command\] does not run on the 4th and 7th day of the week/');
+
+        $this->assertSchedule('fake:command')
+            ->runsOnDays(4, 7);
+    }
+
     public function scheduleFrequencies(): array
     {
         return [
@@ -267,6 +315,16 @@ final class AssertScheduleFrequency extends TestCase
             ['twiceMonthly', 'runsTwiceMonthly'],
             ['quarterly', 'runsQuarterly'],
             ['yearly', 'runsYearly'],
+
+            ['weekdays', 'runsOnWeekdays'],
+            ['weekends', 'runsOnWeekends'],
+            ['mondays', 'runsOnMondays'],
+            ['tuesdays', 'runsOnTuesdays'],
+            ['wednesdays', 'runsOnWednesdays'],
+            ['thursdays', 'runsOnThursdays'],
+            ['fridays', 'runsOnFridays'],
+            ['saturdays', 'runsOnSaturdays'],
+            ['sundays', 'runsOnSundays'],
         ];
     }
 

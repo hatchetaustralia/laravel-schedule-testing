@@ -226,6 +226,77 @@ trait MakesScheduleFrequencyAssertions
             );
     }
 
+    public function runsAt(string|int $time): self
+    {
+        [$hour, $minutes] = $this->formatTime($time);
+
+        return $this->at($time)
+            ->assertScheduleFrequency("daily at {$hour}:{$minutes}");
+    }
+
+    public function runsOnDays(array|int|string $days): self
+    {
+        $formattedDays = collect(Arr::wrap(is_array($days) ? $days : func_get_args()))
+            ->map(fn ($day) => $this->formatOrdinalNumeral($day));
+
+        return $this->days(...func_get_args())
+            ->assertScheduleFrequency("on the {$formattedDays->implode(' and ')} day of the week");
+    }
+
+    public function runsOnWeekdays(): self
+    {
+        return $this->weekdays()
+            ->assertScheduleFrequency('on weekdays');
+    }
+
+    public function runsOnWeekends(): self
+    {
+        return $this->weekends()
+            ->assertScheduleFrequency('on weekends');
+    }
+
+    public function runsOnMondays(): self
+    {
+        return $this->mondays()
+            ->assertScheduleFrequency('on mondays');
+    }
+
+    public function runsOnTuesdays(): self
+    {
+        return $this->tuesdays()
+            ->assertScheduleFrequency('on tuesdays');
+    }
+
+    public function runsOnWednesdays(): self
+    {
+        return $this->wednesdays()
+            ->assertScheduleFrequency('on wednesdays');
+    }
+
+    public function runsOnThursdays(): self
+    {
+        return $this->thursdays()
+            ->assertScheduleFrequency('on thursdays');
+    }
+
+    public function runsOnFridays(): self
+    {
+        return $this->fridays()
+            ->assertScheduleFrequency('on fridays');
+    }
+
+    public function runsOnSaturdays(): self
+    {
+        return $this->saturdays()
+            ->assertScheduleFrequency('on saturdays');
+    }
+
+    public function runsOnSundays(): self
+    {
+        return $this->sundays()
+            ->assertScheduleFrequency('on sundays');
+    }
+
     private function addLeadingZero(int|string $number): string
     {
         return str_pad($number, 2, '0', STR_PAD_LEFT);
