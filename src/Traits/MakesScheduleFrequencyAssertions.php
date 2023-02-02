@@ -179,46 +179,75 @@ trait MakesScheduleFrequencyAssertions
 
     public function runsWeeklyOn(array|string|int $dayOfWeek, $time = '0:0'): self
     {
-        $formatter = new NumberFormatter('en_AU', NumberFormatter::ORDINAL);
-
         $days = collect(Arr::wrap($dayOfWeek))
-            ->map(fn ($day) => $formatter->format($day));
+            ->map(fn ($day) => $this->formatOrdinalNumeral($day));
 
-        $times = explode(':', $time);
-
-        $hour = $this->addLeadingZero($times[0]);
-        $minutes = $this->addLeadingZero(isset($times[1]) ? $times[1] : 0);
+        [$hour, $minutes] = $this->formatTime($time);
 
         return $this->weeklyOn($dayOfWeek, $time)
             ->assertScheduleFrequency("on the {$days->implode(' and ' )} day of the week at {$hour}:{$minutes}");
     }
 
-    public function runsMonthlyOn(): self
+    public function runsMonthlyOn(int|string $dayOfMonth = 1, string|int $time = '0:0'): self
     {
-        return $this->monthlyOn()
-            ->assertScheduleFrequency('');
+        [$hour, $minutes] = $this->formatTime($time);
+
+        return $this->monthlyOn($dayOfMonth, $time)
+            ->assertScheduleFrequency("monthly on the {$this->formatOrdinalNumeral($dayOfMonth)} day at {$hour}:{$minutes}");
     }
 
-    public function runsLastDayOfMonth(): self
+    public function runsLastDayOfMonth(string|int $time = '0:0'): self
     {
-        return $this->lastDayOfMonth()
-            ->assertScheduleFrequency('');
+        [$hour, $minutes] = $this->formatTime($time);
+
+        return $this->lastDayOfMonth($time)
+            ->assertScheduleFrequency("on the last day of the month at {$hour}:{$minutes}");
     }
 
-    public function runsQuarterlyOn(): self
+    public function runsQuarterlyOn(int|string $dayOfQuarter = 1, string|int $time = '0:0'): self
     {
-        return $this->quarterlyOn()
-            ->assertScheduleFrequency('');
+        [$hour, $minutes] = $this->formatTime($time);
+
+        return $this->quarterlyOn($dayOfQuarter, $time)
+            ->assertScheduleFrequency("quarterly on the {$this->formatOrdinalNumeral($dayOfQuarter)} day at {$hour}:{$minutes}");
     }
 
-    public function runsYearlyOn(): self
+    public function runsYearlyOn(int|string $month = 1, int|string $dayOfMonth = 1, string|int $time = '0:0'): self
     {
-        return $this->yearlyOn()
-            ->assertScheduleFrequency('');
+        [$hour, $minutes] = $this->formatTime($time);
+
+        return $this->yearlyOn($month, $dayOfMonth, $time)
+            ->assertScheduleFrequency(
+                sprintf(
+                    "yearly on the %s day of the %s month at {$hour}:{$minutes}",
+                    $this->formatOrdinalNumeral($dayOfMonth),
+                    $this->formatOrdinalNumeral($month),
+                )
+            );
     }
 
     private function addLeadingZero(int|string $number): string
     {
         return str_pad($number, 2, '0', STR_PAD_LEFT);
+    }
+
+    private function formatTime($time): array
+    {
+        $times = explode(':', $time);
+
+        $hour = $this->addLeadingZero($times[0]);
+        $minutes = $this->addLeadingZero(isset($times[1]) ? $times[1] : 0);
+
+        return [
+            $hour,
+            $minutes,
+        ];
+    }
+
+    private function formatOrdinalNumeral(int|float $day): string|bool
+    {
+        $formatter = new NumberFormatter('en_AU', NumberFormatter::ORDINAL);
+
+        return $formatter->format($day);
     }
 }

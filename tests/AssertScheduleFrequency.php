@@ -159,11 +159,87 @@ final class AssertScheduleFrequency extends TestCase
             ->runsWeeklyOn([3, 5], '12:35');
     }
 
-    // todo - finish these assertions off
-    // ['monthlyOn', 'runsMonthlyOn'],
-    // ['lastDayOfMonth', 'runsLastDayOfMonth'],
-    // ['quarterlyOn', 'runsQuarterlyOn'],
-    // ['yearlyOn', 'runsYearlyOn'],
+    public function testLastDayOfMonth(): void
+    {
+        $this->fakeScheduledCommand()->lastDayOfMonth('05:30');
+
+        $this->assertSchedule('fake:command')
+            ->runsLastDayOfMonth('05:30');
+
+        // Can allow for default time
+        $this->fakeScheduledCommand()->lastDayOfMonth();
+
+        $this->assertSchedule('fake:command')
+            ->runsLastDayOfMonth();
+    }
+
+    public function testLastDayOfMonthFailure(): void
+    {
+        $this->fakeScheduledCommand()->lastDayOfMonth();
+
+        $this->expectException(AssertionFailedError::class);
+        $this->expectExceptionMessageMatches('/Command \[fake:command\] does not run on the last day of the month at 15:35/');
+
+        $this->assertSchedule('fake:command')
+            ->runsLastDayOfMonth('15:35');
+    }
+
+    public function testMonthlyOn(): void
+    {
+        $this->fakeScheduledCommand()->monthlyOn(5, '05:30');
+
+        $this->assertSchedule('fake:command')
+            ->runsMonthlyOn(5, '05:30');
+    }
+
+    public function testMonthlyOnFailure(): void
+    {
+        $this->fakeScheduledCommand()->monthlyOn();
+
+        $this->expectException(AssertionFailedError::class);
+        $this->expectExceptionMessageMatches('/Command \[fake:command\] does not run monthly on the 5th day at 15:35/');
+
+        $this->assertSchedule('fake:command')
+            ->runsMonthlyOn(5, '15:35');
+    }
+
+    public function testQuarterlyOn(): void
+    {
+        $this->fakeScheduledCommand()->quarterlyOn(5, '05:30');
+
+        $this->assertSchedule('fake:command')
+            ->runsQuarterlyOn(5, '05:30');
+    }
+
+    public function testQuarterlyOnFailure(): void
+    {
+        $this->fakeScheduledCommand()->quarterlyOn();
+
+        $this->expectException(AssertionFailedError::class);
+        $this->expectExceptionMessageMatches('/Command \[fake:command\] does not run quarterly on the 5th day at 15:35/');
+
+        $this->assertSchedule('fake:command')
+            ->runsQuarterlyOn(5, '15:35');
+    }
+
+    public function testYearlyOn(): void
+    {
+        $this->fakeScheduledCommand()->yearlyOn(1, 5, '05:30');
+
+        $this->assertSchedule('fake:command')
+            ->runsYearlyOn(1, 5, '05:30');
+    }
+
+    public function testYearlyOnFailure(): void
+    {
+        $this->fakeScheduledCommand()->yearlyOn();
+
+        $this->expectException(AssertionFailedError::class);
+        $this->expectExceptionMessageMatches('/Command \[fake:command\] does not run yearly on the 5th day of the 1st month at 15:35/');
+
+        $this->assertSchedule('fake:command')
+            ->runsYearlyOn(1, 5, '15:35');
+    }
 
     public function scheduleFrequencies(): array
     {
