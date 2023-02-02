@@ -116,7 +116,7 @@ trait MakesScheduleFrequencyAssertions
             ->assertScheduleFrequency('daily');
     }
 
-    public function runsTwiceDaily($first = 1, $second = 13): self
+    public function runsTwiceDaily(string|int $first = 1, string|int $second = 13): self
     {
         $firstHour = $this->addLeadingZero($first);
         $secondHour = $this->addLeadingZero($second);
@@ -155,6 +155,9 @@ trait MakesScheduleFrequencyAssertions
             ->assertScheduleFrequency('yearly');
     }
 
+    /**
+     * @param array<int,int>|int $offset
+     */
     public function runsHourlyAt(array|int $offset): self
     {
         $minutes = collect(Arr::wrap($offset));
@@ -169,7 +172,7 @@ trait MakesScheduleFrequencyAssertions
             ->assertScheduleFrequency("daily at {$time}");
     }
 
-    public function runsTwiceDailyAt($first = 1, $second = 13, $offset = 0): self
+    public function runsTwiceDailyAt(string|int $first = 1, string|int $second = 13, string|int $offset = 0): self
     {
         $minutes = $this->addLeadingZero($offset);
 
@@ -177,7 +180,10 @@ trait MakesScheduleFrequencyAssertions
             ->assertScheduleFrequency("twice daily at {$first}:{$minutes} and {$second}:{$minutes}");
     }
 
-    public function runsWeeklyOn(array|string|int $dayOfWeek, $time = '0:0'): self
+    /**
+     * @param array<int,int|string>|string|int $dayOfWeek
+     */
+    public function runsWeeklyOn(array|string|int $dayOfWeek, string|int $time = '0:0'): self
     {
         $days = collect(Arr::wrap($dayOfWeek))
             ->map(fn ($day) => $this->formatOrdinalNumeral($day));
@@ -193,7 +199,9 @@ trait MakesScheduleFrequencyAssertions
         [$hour, $minutes] = $this->formatTime($time);
 
         return $this->monthlyOn($dayOfMonth, $time)
-            ->assertScheduleFrequency("monthly on the {$this->formatOrdinalNumeral($dayOfMonth)} day at {$hour}:{$minutes}");
+            ->assertScheduleFrequency(
+                "monthly on the {$this->formatOrdinalNumeral($dayOfMonth)} day at {$hour}:{$minutes}"
+            );
     }
 
     public function runsLastDayOfMonth(string|int $time = '0:0'): self
@@ -209,7 +217,9 @@ trait MakesScheduleFrequencyAssertions
         [$hour, $minutes] = $this->formatTime($time);
 
         return $this->quarterlyOn($dayOfQuarter, $time)
-            ->assertScheduleFrequency("quarterly on the {$this->formatOrdinalNumeral($dayOfQuarter)} day at {$hour}:{$minutes}");
+            ->assertScheduleFrequency(
+                "quarterly on the {$this->formatOrdinalNumeral($dayOfQuarter)} day at {$hour}:{$minutes}"
+            );
     }
 
     public function runsYearlyOn(int|string $month = 1, int|string $dayOfMonth = 1, string|int $time = '0:0'): self
@@ -234,6 +244,9 @@ trait MakesScheduleFrequencyAssertions
             ->assertScheduleFrequency("daily at {$hour}:{$minutes}");
     }
 
+    /**
+     * @param array<int,int|string>|int|string $days
+     */
     public function runsOnDays(array|int|string $days): self
     {
         $formattedDays = collect(Arr::wrap(is_array($days) ? $days : func_get_args()))
@@ -302,7 +315,10 @@ trait MakesScheduleFrequencyAssertions
         return str_pad($number, 2, '0', STR_PAD_LEFT);
     }
 
-    private function formatTime($time): array
+    /**
+     * @return array<int, string>
+     */
+    private function formatTime(string|int $time): array
     {
         $times = explode(':', $time);
 
