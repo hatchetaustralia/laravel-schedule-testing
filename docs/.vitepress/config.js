@@ -2,6 +2,7 @@ import { defineConfig } from "vitepress"
 
 export default defineConfig({
     title: 'Laravel Schedule Testing',
+    titleTemplate: 'Hatchet Laravel Schedule Testing - :title',
     description: 'A lightweight package for testing Laravel schedules.',
 
     base: '/laravel-schedule-testing/',
