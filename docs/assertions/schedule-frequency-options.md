@@ -3,6 +3,14 @@ The following assertions are mapped to each of the [Schedule Frequency Options](
 
 Each of these assertions have the same parameters as their counterparts.
 
+## runsAt
+Asserts that the command runs at the given time.
+
+```php
+$this->assertSchedule('command')
+    ->runsAt('13:30');
+```
+
 ## runsEveryMinute
 Asserts that the command runs every minute.
 
@@ -75,6 +83,18 @@ $this->assertSchedule('command')
     ->runsHourly();
 ```
 
+## runsHourlyAt
+Asserts that the command runs every hour at the given time/s.
+
+```php
+$this->assertSchedule('command')
+    ->runsHourlyAt(offset: 10);
+
+// multiple times can be passed as an array
+$this->assertSchedule('command')
+    ->runsHourlyAt(offset: [10, 30]);
+```
+
 ## runsEveryOddHour
 Asserts that the command runs every odd hour.
 
@@ -123,18 +143,36 @@ $this->assertSchedule('command')
     ->runsDaily();
 ```
 
+## runsDailyAt
+Asserts that the command runs daily at the given time.
+
+```php
+$this->assertSchedule('command')
+    ->runsDailyAt(offset: '16:00');
+```
+
 ## runsTwiceDaily
 Asserts that the command runs twice daily. By default the hours checked are the first and thirteenth hour.
 
 ```php
 $this->assertSchedule('command')
     ->runsTwiceDaily();
-```
 
-The hours to check in the day can be passed in as parameters. This example checks that the command runs twice daily at 08:00am and 08:00pm
-```php
+// Checking it runs at 08:00 and 20:00
 $this->assertSchedule('command')
     ->runsTwiceDaily(first: 8, second: 20);
+```
+
+## runsTwiceDailyAt
+Asserts that the command runs twice daily at the given time.
+
+```php
+$this->assertSchedule('command')
+    ->runsTwiceDailyAt();
+
+// Checking it runs at 08:15 and 20:15
+$this->assertSchedule('command')
+    ->runsTwiceDailyAt(first: 8, second: 20, offset: '15');
 ```
 
 ## runsWeekly
@@ -145,6 +183,17 @@ $this->assertSchedule('command')
     ->runsWeekly();
 ```
 
+## runsWeeklyOn
+Asserts that the command runs weekly on the given day/s and time.
+
+```php
+$this->assertSchedule('command')
+    ->runsWeeklyOn(dayOfWeek: 1, time: '12:15');
+
+$this->assertSchedule('command')
+    ->runsWeeklyOn(dayOfWeek: [1, 3, 5], time: '12:15');
+```
+
 ## runsMonthly
 Asserts that the command runs monthly.
 
@@ -153,21 +202,34 @@ $this->assertSchedule('command')
     ->runsMonthly();
 ```
 
+## runsMonthlyOn
+Asserts that the command runs monthly on the given day and time.
+
+```php
+$this->assertSchedule('command')
+    ->runsMonthlyOn(dayOfMonth: 5, time: '13:30');
+```
+
 ## runsTwiceMonthly
 Asserts that the command runs twice monthly. By default the days checked are the first and sixteenth of the month at 00:00.
-
-$first = 1, $second = 16, $time = '0:0'
 
 ```php
 $this->assertSchedule('command')
     ->runsTwiceMonthly();
+
+$this->assertSchedule('command')
+    ->runsTwiceMonthly(first: 5, second: 10, time: '16:30');
 ```
 
-The days and time of both days can be checked by passing the following parameters. This example checks that the command runs on the 5th and 10th days at 16:30:
+## runsLastDayOfMonth
+Asserts that the command runs on the last day of each month.
 
 ```php
 $this->assertSchedule('command')
-    ->runsTwiceMonthly(first: 5, second: 10, time: '16:30');
+    ->runsLastDayOfMonth();
+
+$this->assertSchedule('command')
+    ->runsLastDayOfMonth(time: '13:30');
 ```
 
 ## runsQuarterly
@@ -178,12 +240,28 @@ $this->assertSchedule('command')
     ->runsQuarterly();
 ```
 
+## runsQuarterlyOn
+Asserts that the command runs quarterly on the given day and time.
+
+```php
+$this->assertSchedule('command')
+    ->runsQuarterlyOn(dayOfQuarter: 5, time: '12:45');
+```
+
 ## runsYearly
 Asserts that the command runs yearly.
 
 ```php
 $this->assertSchedule('command')
     ->runsYearly();
+```
+
+## runsYearlyOn
+Asserts that the command runs yearly on the given month, day of month and time.
+
+```php
+$this->assertSchedule('command')
+    ->runsYearlyOn(month: 4, dayOfMonth: 10, time: '03:30');
 ```
 
 ## runsOnWeekdays
@@ -249,4 +327,24 @@ Asserts that the command runs on sundays.
 ```php
 $this->assertSchedule('command')
     ->runsOnSundays();
+```
+
+## runsOnDays
+Asserts that the command runs on the given days.
+```php
+$this->assertSchedule('command')
+    ->runsOnDays(days: 3);
+
+$this->assertSchedule('command')
+    ->runsOnDays(days: [2, 4, 6]);
+```
+
+## runsOnDays
+Asserts that the command runs on the given days.
+```php
+$this->assertSchedule('command')
+    ->runsOnDays(days: 3);
+
+$this->assertSchedule('command')
+    ->runsOnDays(days: [2, 4, 6]);
 ```

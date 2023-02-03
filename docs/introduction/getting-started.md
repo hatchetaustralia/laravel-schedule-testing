@@ -31,3 +31,12 @@ class HourlyReportCommandTest extends TestCase // [!code focus:20]
     }
 }
 ```
+
+All assertions can be chained off of one another:
+
+```php
+$this->assertSchedule('reports:send-report')
+    ->runsEveryMinute()
+    ->hasTimezone('Pacific/Auckland')
+    ->runsInEnvironment('production');
+```
