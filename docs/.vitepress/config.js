@@ -4,7 +4,7 @@ export default defineConfig({
     title: 'Laravel Schedule Testing',
     description: 'A lightweight package for testing Laravel schedules.',
 
-    base: 'https://hatchetaustralia.github.io/laravel-schedule-testing',
+    base: 'https://hatchetaustralia.github.io/laravel-schedule-testing/',
 
     lastUpdated: true,
     cleanUrls: true,
