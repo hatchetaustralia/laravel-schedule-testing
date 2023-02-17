@@ -44,6 +44,19 @@ final class ScheduleAssertion
         return $this;
     }
 
+    public function runsInMaintenanceMode(): self
+    {
+        Assert::assertGreaterThan(
+            0,
+            $this->scheduledEvents
+                ->filter(fn (Event $event) => $event->evenInMaintenanceMode)
+                ->count(),
+            $this->failureMessage("does not run in maintenance mode.")
+        );
+
+        return $this;
+    }
+
     /**
      * @param string|array<int,string> $environment
      */

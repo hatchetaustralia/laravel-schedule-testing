@@ -74,3 +74,11 @@ Multiple environments can be checked by using an array:
 $this->assertSchedule('command')
     ->runsInEnvironment(['production', 'staging']);
 ```
+
+## runsInMaintenanceMode
+Asserts that the command is scheduled to run even while the application is in maintenance mode.
+
+```php
+$this->assertSchedule('command')
+    ->runsInMaintenanceMode();
+```

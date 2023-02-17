@@ -331,7 +331,7 @@ trait MakesScheduleFrequencyAssertions
         ];
     }
 
-    private function formatOrdinalNumeral(int|float $day): string|bool
+    private function formatOrdinalNumeral(int|float $day): string
     {
         $formatter = new NumberFormatter('en_AU', NumberFormatter::ORDINAL);
 
