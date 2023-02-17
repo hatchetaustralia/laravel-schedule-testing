@@ -82,3 +82,11 @@ Asserts that the command is scheduled to run even while the application is in ma
 $this->assertSchedule('command')
     ->runsInMaintenanceMode();
 ```
+
+## canOverlap
+Asserts that the scheduled task can overlap a previous instance of the task still running.
+
+```php
+$this->assertSchedule('command')
+    ->canOverlap();
+```

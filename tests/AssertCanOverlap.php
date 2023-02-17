@@ -6,22 +6,22 @@ use Tests\TestCase;
 use PHPUnit\Framework\AssertionFailedError;
 use Hatchet\LaravelScheduleTesting\InteractsWithSchedule;
 
-final class AssertRunsInMaintenanceMode extends TestCase
+final class AssertCanOverlap extends TestCase
 {
     use InteractsWithSchedule;
 
-    public function testRunsInMaintenanceMode(): void
-    {
-        $this->fakeScheduledCommand()
-            ->evenInMaintenanceMode();
-
-        $this->assertSchedule('fake:command')
-            ->runsInMaintenanceMode();
-    }
-
-    public function testRunsInMaintenanceModeFailure(): void
+    public function testCanOverlap(): void
     {
         $this->fakeScheduledCommand();
+
+        $this->assertSchedule('fake:command')
+            ->canOverlap();
+    }
+
+    public function testCanOverlapFailure(): void
+    {
+        $this->fakeScheduledCommand()
+            ->withoutOverlapping();
 
         $this->expectException(AssertionFailedError::class);
 
@@ -30,6 +30,6 @@ final class AssertRunsInMaintenanceMode extends TestCase
         );
 
         $this->assertSchedule('fake:command')
-            ->runsInMaintenanceMode();
+            ->canOverlap();
     }
 }

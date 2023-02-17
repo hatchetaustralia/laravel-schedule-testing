@@ -51,7 +51,20 @@ final class ScheduleAssertion
             $this->scheduledEvents
                 ->filter(fn (Event $event) => $event->evenInMaintenanceMode)
                 ->count(),
-            $this->failureMessage("does not run in maintenance mode.")
+            $this->failureMessage('does not run in maintenance mode.')
+        );
+
+        return $this;
+    }
+
+    public function canOverlap(): self
+    {
+        Assert::assertGreaterThan(
+            0,
+            $this->scheduledEvents
+                ->filter(fn (Event $event) => ! $event->withoutOverlapping)
+                ->count(),
+            $this->failureMessage('does not run in maintenance mode.')
         );
 
         return $this;
