@@ -90,3 +90,11 @@ Asserts that the scheduled task can overlap a previous instance of the task stil
 $this->assertSchedule('command')
     ->canOverlap();
 ```
+
+## cannotOverlap
+Asserts that the scheduled task cannot overlap a previous instance of the task still running.
+
+```php
+$this->assertSchedule('command')
+    ->cannotOverlap();
+```

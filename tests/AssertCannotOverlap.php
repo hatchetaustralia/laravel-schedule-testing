@@ -6,30 +6,30 @@ use Tests\TestCase;
 use PHPUnit\Framework\AssertionFailedError;
 use Hatchet\LaravelScheduleTesting\InteractsWithSchedule;
 
-final class AssertCanOverlap extends TestCase
+final class AssertCannotOverlap extends TestCase
 {
     use InteractsWithSchedule;
 
-    public function testCanOverlap(): void
-    {
-        $this->fakeScheduledCommand();
-
-        $this->assertSchedule('fake:command')
-            ->canOverlap();
-    }
-
-    public function testCanOverlapFailure(): void
+    public function testCannotOverlap(): void
     {
         $this->fakeScheduledCommand()
             ->withoutOverlapping();
 
+        $this->assertSchedule('fake:command')
+            ->cannotOverlap();
+    }
+
+    public function testCannotOverlapFailure(): void
+    {
+        $this->fakeScheduledCommand();
+
         $this->expectException(AssertionFailedError::class);
 
         $this->expectExceptionMessage(
-            "Command [fake:command] is configured to prevent overlapping."
+            "Command [fake:command] is configured to allow overlapping."
         );
 
         $this->assertSchedule('fake:command')
-            ->canOverlap();
+            ->cannotOverlap();
     }
 }
