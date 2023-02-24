@@ -1,3 +1,26 @@
 :root {
     --vp-sidebar-width: 300px;
+    --vp-c-brand: #cc2824;
+    --vp-c-brand-light: #b62838;
+    --vp-c-brand-lighter: #c62b3d;
+    --vp-c-brand-dark: #a61e1c;
+    --vp-c-brand-darker: #921a18;
+}
+
+.VPHero .main {
+    max-width: 697px !important;
+}
+
+.VPHero .main h1 {
+    max-width: 677px !important;
+}
+
+.VPContent.is-home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.VPHome {
+    padding-bottom: 0 !important;
 }
