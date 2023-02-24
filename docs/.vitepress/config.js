@@ -79,6 +79,9 @@ function sidebar() {
                         { text: 'isScheduled', link: '/assertions/#isscheduled' },
                         { text: 'isScheduledToRunAt', link: '/assertions/#isscheduledtorunat' },
                         { text: 'runsInEnvironment', link: '/assertions/#runsinenvironment' },
+                        { text: 'runsInMaintenanceMode', link: '/assertions/#runsinmaintenancemode' },
+                        { text: 'canOverlap', link: '/assertions/#canoverlap' },
+                        { text: 'cannotOverlap', link: '/assertions/#cannotoverlap' },
                     ]
                 },
                 {
