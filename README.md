@@ -3,7 +3,7 @@
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/hatchetaustralia/laravel-schedule-testing/HEAD/.github/logo-dark.png">
       <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/hatchetaustralia/laravel-schedule-testing/HEAD/.github/logo-light.png">
-      <img alt="Hatchet's Laravel Schedule Testing" src="https://raw.githubusercontent.com/hatchetaustralia/laravel-schedule-testing/HEAD/.github/logo-light.png" width="664" height="566" style="max-width: 100%;">
+      <img alt="Hatchet's Laravel Schedule Testing" src="https://raw.githubusercontent.com/hatchetaustralia/laravel-schedule-testing/HEAD/.github/logo-light.png" width="664" height="566" style="max-width: 100%; object-fit: contain;">
     </picture>
   </a>
 </p>
@@ -16,7 +16,7 @@
 </p>
 
 ## About Laravel Schedule Testing
-Laravel Schedule Testing was created and is maintained by the developers at [Hatchet](https://hatchet.com.au) and is a lightweight package for testing your scheduled commands in Laravel.
+[Laravel Schedule Testing](https://hatchetaustralia.github.io/laravel-schedule-testing/) was created and is maintained by the developers at [Hatchet](https://hatchet.com.au) and is a lightweight package for testing your scheduled commands in Laravel.
 
 ## Installation
 >Minimum requirement of PHP 8.0 and Laravel 9
@@ -43,77 +43,8 @@ class HourlyReportCommandTest extends TestCase
 }
 ```
 
-## Available Assertions
-
-- [hasEmailOutputOnFailure](#hasEmailOutputOnFailure)
-- [hasExpression](#hasExpression)
-- [hasTimezone](#hasTimezone)
-- [isScheduled](#isScheduled)
-- [isScheduledToRunAt](#isScheduledToRunAt)
-- [runsInEnvironment](#runsInEnvironment)
-
-### hasEmailOutputOnFailure
-Asserts that the command has the given email recipients configured to receive an email with output on failure.
-
-```php
-$this->assertSchedule('command')->hasEmailOutputOnFailure('email@gmail.com');
-```
-
-Multiple recipients can be checked by using an array:
-```php
-$this->assertSchedule('command')->hasEmailOutputOnFailure(['email@gmail.com', 'email@outlook.com']);
-```
-
-### hasExpression
-Asserts that the command has the given cron expression.
-
-```php
-$this->assertSchedule('command')->hasExpression('0 * * * *');
-```
-
-### hasTimezone
-Asserts that the command has the given timezone.
-
-```php
-$this->assertSchedule('command')->hasTimezone('Australia/Perth');
-```
-
-Or you can pass a DateTimeZone:
-```php
-$this->assertSchedule('command')->hasTimezone(new DateTimeZone('Australia/Perth'));
-```
-
-### isScheduled
-Asserts that the command has a defined schedule.
-
-```php
-$this->assertSchedule('command')->isScheduled();
-```
-
-An optional parameter can be provided to check that the command is scheduled to run at the given time.
-
-```php
-$this->assertSchedule('command')->isScheduled(now()->startOfDay());
-```
-
-### isScheduledToRunAt
-Asserts that the command is scheduled to run at the provided date.
-
-```php
-$this->assertSchedule('command')->isScheduledToRunAt(now()->startOfDay());
-```
-
-### runsInEnvironment
-Asserts that the command is scheduled to run in all provided environments.
-
-```php
-$this->assertSchedule('command')->runsInEnvironment('production');
-```
-
-Multiple environments can be checked by using an array:
-```php
-$this->assertSchedule('command')->runsInEnvironment(['production', 'staging']);
-```
+## Assertions
+Check out our [documentation](https://hatchetaustralia.github.io/laravel-schedule-testing/) for further information on what assertions are available.
 
 ## Contributing
 
