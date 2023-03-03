@@ -14,7 +14,7 @@ export default defineConfig({
         [ 'meta', { name: 'theme-color', content: '#3c8772' } ],
         [
             'link',
-            { rel: 'icon', href: '/favicon-32x32.png', type: 'image/png' }
+            { rel: 'icon', href: '/laravel-schedule-testing/favicon-32x32.png', type: 'image/png' }
         ],
         [
             'link',
