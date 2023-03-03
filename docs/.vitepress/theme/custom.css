@@ -9,6 +9,8 @@
 
 .VPHero .main {
     max-width: 697px !important;
+    margin: 0 auto;
+    margin-top: 120px;
 }
 
 .VPHero .main h1 {
@@ -23,4 +25,29 @@
 
 .VPHome {
     padding-bottom: 0 !important;
+}
+
+
+@media (min-width: 960px) {
+    .VPHero .main {
+        margin-top: 0;
+    }
+
+    .VPHome .image-src {
+        max-width: 499px;
+    }
+}
+
+@media (min-width: 640px) {
+    .VPHero .main {
+        margin-top: 80px;
+    }
+
+    .VPHome .image-src {
+        max-width: 546px;
+    }
+}
+
+.VPHome .image-src {
+    max-width: 463px;
 }
