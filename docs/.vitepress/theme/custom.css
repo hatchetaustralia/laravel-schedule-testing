@@ -39,10 +39,6 @@
 }
 
 @media (min-width: 640px) {
-    .VPHero .main {
-        margin-top: 80px;
-    }
-
     .VPHome .image-src {
         max-width: 546px;
     }
