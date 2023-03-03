@@ -3,7 +3,7 @@
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/hatchetaustralia/laravel-schedule-testing/HEAD/.github/logo-dark.png">
       <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/hatchetaustralia/laravel-schedule-testing/HEAD/.github/logo-light.png">
-      <img alt="Hatchet's Laravel Schedule Testing" src="https://raw.githubusercontent.com/hatchetaustralia/laravel-schedule-testing/HEAD/.github/logo-light.png" width="664" height="566" style="max-width: 100%;">
+      <img alt="Hatchet's Laravel Schedule Testing" src="https://raw.githubusercontent.com/hatchetaustralia/laravel-schedule-testing/HEAD/.github/logo-light.png" width="664" style="max-width: 100%;">
     </picture>
   </a>
 </p>
