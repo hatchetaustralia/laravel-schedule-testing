@@ -31,13 +31,18 @@ final class ScheduleAssertion
         $this->scheduledEvents = $this->findScheduledEventsBySignature();
     }
 
+    /** @return Collection<Int,Event> */
+    public function filterEvents(callable $callback): Collection
+    {
+        return $this->scheduledEvents
+            ->filter(fn (Event $event) => $callback($event));
+    }
+
     public function hasExpression(string $cronExpression): self
     {
         Assert::assertGreaterThan(
             0,
-            $this->scheduledEvents
-                ->filter(fn (Event $event) => $event->expression === $cronExpression)
-                ->count(),
+            $this->filterEvents(fn (Event $event) => $event->expression === $cronExpression)->count(),
             $this->failureMessage("cron expression does not match {$cronExpression}.")
         );
 
@@ -48,9 +53,7 @@ final class ScheduleAssertion
     {
         Assert::assertGreaterThan(
             0,
-            $this->scheduledEvents
-                ->filter(fn (Event $event) => $event->evenInMaintenanceMode)
-                ->count(),
+            $this->filterEvents(fn (Event $event) => $event->evenInMaintenanceMode)->count(),
             $this->failureMessage('does not run in maintenance mode.')
         );
 
@@ -61,9 +64,7 @@ final class ScheduleAssertion
     {
         Assert::assertGreaterThan(
             0,
-            $this->scheduledEvents
-                ->filter(fn (Event $event) => ! $event->withoutOverlapping)
-                ->count(),
+            $this->filterEvents(fn (Event $event) => ! $event->withoutOverlapping)->count(),
             $this->failureMessage('is configured to prevent overlapping.')
         );
 
@@ -74,9 +75,7 @@ final class ScheduleAssertion
     {
         Assert::assertGreaterThan(
             0,
-            $this->scheduledEvents
-                ->filter(fn (Event $event) => $event->withoutOverlapping)
-                ->count(),
+            $this->filterEvents(fn (Event $event) => $event->withoutOverlapping)->count(),
             $this->failureMessage('is configured to allow overlapping.')
         );
 
@@ -92,11 +91,9 @@ final class ScheduleAssertion
 
         Assert::assertGreaterThan(
             0,
-            $this->scheduledEvents
-                ->filter(fn (Event $event) => $environments->every(
-                    fn (string $environment) => $event->runsInEnvironment($environment)
-                ))
-                ->count(),
+            $this->filterEvents(fn (Event $event) => $environments->every(
+                fn (string $environment) => $event->runsInEnvironment($environment)
+            ))->count(),
             $this->failureMessage("is not scheduled to run in {$environments->implode(' and ')}.")
         );
 
@@ -158,14 +155,12 @@ final class ScheduleAssertion
 
         Assert::assertGreaterThan(
             0,
-            $this->scheduledEvents
-                ->filter(function ($event) {
-                    $reflectionMethod = new ReflectionMethod(Event::class, 'expressionPasses');
-                    $reflectionMethod->setAccessible(true);
+            $this->filterEvents(function ($event) {
+                $reflectionMethod = new ReflectionMethod(Event::class, 'expressionPasses');
+                $reflectionMethod->setAccessible(true);
 
-                    return $reflectionMethod->invoke($event);
-                })
-                ->count(),
+                return $reflectionMethod->invoke($event);
+            })->count(),
             $this->failureMessage("is not scheduled to run at {$scheduledAt->toDateTimeString()}.")
         );
 
