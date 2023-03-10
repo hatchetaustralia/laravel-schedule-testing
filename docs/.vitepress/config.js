@@ -31,7 +31,6 @@ export default defineConfig({
     ],
 
     themeConfig: {
-        // nav: nav(),
         logo: '/hatchet.svg',
 
         sidebar: {
@@ -130,6 +129,10 @@ function sidebar() {
                         { text: 'runsOnSundays', link: '/assertions/schedule-frequency-options#runsonsundays'},
                         { text: 'runsOnDays', link: '/assertions/schedule-frequency-options#runsondays'},
                     ]
+                },
+                {
+                    text: 'Custom Assertions',
+                    link: '/assertions/custom-assertions',
                 },
             ]
         },
